@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.util.Vector;
 
 import de.mauricius17.shield.shield.Shield.IShield;
@@ -22,6 +23,14 @@ import de.slikey.effectlib.util.ParticleEffect;
 
 public class ShieldListener implements Listener {
 
+	@EventHandler
+	public void onQuit(PlayerQuitEvent e) {
+		if(Utils.getShield().containsKey(e.getPlayer().getUniqueId())) {
+			Utils.getShield().get(e.getPlayer().getUniqueId()).stop();
+			Utils.getShield().remove(e.getPlayer().getUniqueId());
+		}
+	}
+	
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		Player p = e.getPlayer();
